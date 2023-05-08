@@ -1,0 +1,49 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Chi tiết sản phẩm{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+  <div class="col-sm-6 text-center align-self-center">
+   <img src="{{product.product_image.url}}" alt="" class="img-fluid img-thumbnail">
+  </div>
+  <div class="col-sm-5 offset-sm-1">
+   <h2>Tên sản phẩm:<br><h1> {{product.title}} <h1></h2>
+   <hr>
+   <p>{{product.description}}</p> <br>
+   <h4>{{product.discounted_price}} USD<small class="fw-light text-decoration-line-through">{{product.selling_price}} USD</small></h4> <br>
+
+   {% if request.user.is_authenticated %}
+
+        {% if item_already_in_cart %}
+            <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4"></i>">Giỏ hàng</a>
+        {% else %}
+
+            <form action="/add-to-cart" class="d-inline">
+                <input type="hidden" name="prod_id" value={{product.id}} id="prod_id">
+                <button type="submit" class="btn btn-primary shadow px-5 py-2">Thêm vào giỏ hàng</button>
+            </form>
+
+        {% endif %}
+   {% endif %}
+
+   {% if not request.user.is_authenticated %}
+        <form action="/add-to-cart" class="d-inline">
+            <input type="hidden" name="prod_id" value={{product.id}} id="prod_id">
+            <button type="submit" class="btn btn-primary shadow px-5 py-2">Thêm vào giỏ hàng</button>
+        </form>
+   {% endif %}
+
+   {% comment %} <a href="{% url 'add-to-cart' %}" class="btn btn-primary shadow px-5 py-2">Thêm vào giỏ hàng</a> {% endcomment %}
+   <a href="{% url 'checkout' %}" class="btn btn-danger shadow px-5 py-2 ms-4">Mua ngay</a>
+   <h5 class="mt-5">Ưu đãi</h5>
+   <ul>
+    <li> Ưu đãi Ngân hàng Hoàn tiền không giới hạn 5% cho Tín dụng Ngân hàng MB Bank </li>
+    <li> Giá đặc biệt Được giảm thêm 10 USD (giá đã bao gồm chiết khấu) </li>
+    <li> Miễn phí vận chuyển 100 USD / tháng</li>
+    <li> Ưu đãi dành cho đối tác Thẻ quà tặng Momo trị giá 1000 USD cho mỗi giao dịch thứ 1000 với thẻ ghi nợ / thẻ tín dụng Visa mới </li>
+   </ul>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}

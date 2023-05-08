@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Book{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+  <div class="col-sm-3">
+    <div class="list-group">
+      <a href="{% url 'book' %}" class="list-group-item list-group-item-action" aria-current="true">All Book</a>
+      <a href="{% url 'bookdata' 'Nha_Nam' %}" class="list-group-item list-group-item-action" aria-current="true">Nhà xuất bản Nhã Nam</a>
+      <a href="{% url 'bookdata' 'Kim_Dong' %}" class="list-group-item list-group-item-action" aria-current="true">Nhà xuất bản Kim Đồng</a>
+      <a href="{% url 'bookdata' 'Giao_duc' %}" class="list-group-item list-group-item-action" aria-current="true">Nhà xuất bản Giáo Dục</a>
+      <a href="{% url 'bookdata' 'Thanh_nien' %}" class="list-group-item list-group-item-action" aria-current="true">Nhà xuất bản Thanh Niên</a>
+      <a href="{% url 'bookdata' 'Bach_Khoa_Ha_Noi' %}" class="list-group-item list-group-item-action" aria-current="true">Nhà xuất bản Bách Khoa Hà Nội</a>
+      <a href="{% url 'bookdata' 'below' %}" class="list-group-item list-group-item-action" aria-current="true">Below 50</a>
+      <a href="{% url 'bookdata' 'above' %}" class="list-group-item list-group-item-action" aria-current="true">Above 50</a>
+</div>
+  </div>
+  <div class="col-sm-8 offset-sm-1">
+    <div class="row">
+      {% for product in books %}
+      <div class="col-sm-4 text-center mb-4">
+          <a href="{% url 'product-detail' product.id %}" class="btn">
+              <div class="item">
+                  <img src="{{product.product_image.url}}" alt="" height="280" width="250" class="">
+                  <div class="fw-bold">{{product.title}}</div>
+                  <div class="fw-bold">{{product.discounted_price}} USD <small class="fw-light text-decoration-line-through">{{product.selling_price}}</small></div>
+              </div>
+           </a>
+      </div>
+      {% endfor %}
+  </div>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}
